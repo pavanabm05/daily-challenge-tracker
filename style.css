@@ -23,3 +23,42 @@ button {
   border: none;
   border-radius: 5px;
 }
+body {
+  font-family: Arial;
+  text-align: center;
+  background-color: #f4f6f8;
+}
+
+header {
+  background-color: #4caf50;
+  color: white;
+  padding: 20px;
+}
+
+main {
+  margin-top: 40px;
+}
+
+#challenge {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+footer {
+  margin-top: 50px;
+  color: gray;
+}
