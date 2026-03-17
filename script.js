@@ -1,42 +1,84 @@
-console.log("Daily Challenge Tracker started");
-
+// 🎯 Challenges list
 const challenges = [
-  "Learn one keyboard shortcut you didn’t know 💻",
-  "Do 20 jumping jacks to refresh your mind ⚡",
-  "Write one idea for a future startup 💡",
-  "Teach someone one thing you learned today 🎓",
-  "Read about one new technology for 10 minutes 🤖",
-  "Write down 3 things you are grateful for 🙏",
-  "Drink a full glass of water right now 💧",
-  "Organize one small area of your room 🧹",
-  "Listen to a motivational talk 🎧",
-  "Write a positive message to a friend 📩",
-  "Learn one new English word and use it in a sentence 🧠",
-  "Spend 5 minutes stretching your body 🧘",
-  "Think of one problem around you and a tech solution 🔧",
-  "Watch a short educational video 📚",
-  "Write tomorrow’s top 3 priorities 📝",
-  "Spend 10 minutes learning coding 💻",
-  "Go outside and take 10 deep breaths 🌿",
-  "Reduce social media usage for 30 minutes 📵",
-  "Help someone with a small task 🤝",
-  "Write one creative idea for an app 📱",
-  "Read one interesting fact about science 🔬",
-  "Write a short journal about your day ✍️",
-  "Try to memorize a short quote 📖",
-  "Practice typing speed for 5 minutes ⌨️",
-  "Clean your study table before starting work 📂",
+  "Drink 2 liters of water today 💧",
+  "Walk 8000+ steps 🚶",
+  "Read 10 pages of a book 📖",
+  "Learn something new for 20 minutes 🧠",
+  "No social media for 2 hours 📵",
+  "Wake up before 7 AM 🌅",
+  "Write down 3 goals for today 🎯",
+  "Help someone today 🤝",
+  "Do 15 minutes of exercise 🏋️",
+  "Meditate for 10 minutes 🧘",
+  "Clean your workspace 🧹",
+  "Practice coding for 30 minutes 💻",
+  "Watch an educational video 🎥",
+  "Eat healthy food today 🥗",
+  "Sleep before 11 PM 😴",
 ];
+
+// 📌 Elements
+const challengeElement = document.getElementById("challenge");
+const streakElement = document.getElementById("streak");
+const completeBtn = document.getElementById("completeBtn");
+
+// 📅 Today's date
+let today = new Date().toDateString();
+
+// ==========================
+// 🎯 DAILY CHALLENGE
+// ==========================
+
+let storedDate = localStorage.getItem("challengeDate");
 let savedChallenge = localStorage.getItem("dailyChallenge");
 
-if (savedChallenge) {
-  document.getElementById("challenge").textContent = savedChallenge;
+if (storedDate === today && savedChallenge) {
+  challengeElement.textContent = savedChallenge;
 } else {
   let randomIndex = Math.floor(Math.random() * challenges.length);
-
   let todayChallenge = challenges[randomIndex];
 
   localStorage.setItem("dailyChallenge", todayChallenge);
+  localStorage.setItem("challengeDate", today);
 
-  document.getElementById("challenge").textContent = todayChallenge;
+  challengeElement.textContent = todayChallenge;
 }
+
+// ==========================
+// 🔥 STREAK DISPLAY
+// ==========================
+
+let savedStreak = localStorage.getItem("streak") || 0;
+streakElement.textContent = savedStreak;
+
+// ==========================
+// ✅ COMPLETED BUTTON
+// ==========================
+
+completeBtn.addEventListener("click", function () {
+  let lastCompletedDate = localStorage.getItem("lastCompletedDate");
+  let streak = parseInt(localStorage.getItem("streak")) || 0;
+
+  // 🚫 Prevent multiple clicks same day
+  if (lastCompletedDate === today) {
+    alert("You already completed today's challenge ✅");
+    return;
+  }
+
+  let yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  // 🔥 Streak logic
+  if (lastCompletedDate === yesterday.toDateString()) {
+    streak++;
+  } else {
+    streak = 1;
+  }
+
+  // 💾 Save
+  localStorage.setItem("streak", streak);
+  localStorage.setItem("lastCompletedDate", today);
+
+  // 🖥️ Update UI
+  streakElement.textContent = streak;
+});
